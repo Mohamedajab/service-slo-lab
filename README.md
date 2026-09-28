@@ -19,3 +19,9 @@ monitoring should use a meaningful rolling window and enough traffic.
 
 Main idea to explain: an error budget converts a reliability target into the
 number of failed requests the service can tolerate during the measurement window.
+
+## Documentation
+
+See [docs/DESIGN.md](docs/DESIGN.md) for the data flow, SLO calculations,
+error-budget interpretation, design trade-offs, production extensions and an
+interview walkthrough.
