@@ -22,6 +22,9 @@ number of failed requests the service can tolerate during the measurement window
 
 ## Documentation
 
+See [Running the lab and CI](docs/RUNNING_AND_CI.md) for local setup, the sample's
+expected report, a passing comparison and exit-code troubleshooting.
+
 See [docs/DESIGN.md](docs/DESIGN.md) for the data flow, SLO calculations,
 error-budget interpretation, design trade-offs, production extensions and an
 interview walkthrough.
