@@ -21,3 +21,17 @@ def test_bad_log_names_line(tmp_path: Path):
     path.write_text('{"status": 200}\n')
     with pytest.raises(ValueError, match="line 1"):
         load(path)
+
+
+@pytest.mark.parametrize(
+    "requests,target,allowed", [(5, .8, 1), (10, .9, 1), (100, .99, 1), (3, .9, 0)]
+)
+def test_error_budget_rounds_down_without_float_error(requests, target, allowed):
+    samples = [{"status": 200, "latency_ms": 100}] * (requests - 1)
+    samples.append({"status": 503, "latency_ms": 100})
+
+    result = report(samples, target)
+
+    assert result["allowed_failures"] == allowed
+    assert result["error_budget_remaining"] == allowed - 1
+    assert result["availability_met"] is (allowed >= 1)

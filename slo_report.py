@@ -4,6 +4,7 @@ from __future__ import annotations
 import argparse
 import json
 import math
+from decimal import Decimal
 from pathlib import Path
 
 
@@ -36,7 +37,7 @@ def report(samples: list[dict], availability_target=0.99, latency_target_ms=500)
         raise ValueError("targets must be positive; availability cannot exceed 1")
     good = sum(200 <= row["status"] < 500 for row in samples)
     failures = len(samples) - good
-    allowed = math.floor(len(samples) * (1 - availability_target))
+    allowed = math.floor(len(samples) * (1 - Decimal(str(availability_target))))
     p95 = percentile([row["latency_ms"] for row in samples], .95)
     return {"requests": len(samples), "availability": good / len(samples),
             "availability_target": availability_target, "failed_requests": failures,
